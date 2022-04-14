@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blogpessoal.blogpessoal.model.Postagem;
+import com.blogpessoal.blogpessoal.model.PostagemModel;
 import com.blogpessoal.blogpessoal.repository.PostagemRepository;
 
 @RestController //informa para o spring que essa classe se trata de um controlador
@@ -29,14 +29,14 @@ public class PostagemController {
 	
 	
 	//retona lista do tipo postagem e o nome do método será GETALL sem parametros, pq vai retornar 
-	public ResponseEntity<List<Postagem>>GetAll() {
+	public ResponseEntity<List<PostagemModel>>GetAll() {
 		
 		//receberá um objeto do tipo ReponseEntity, passando um "ok" para indicar uma resposta para validar 
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
-	@GetMapping ("/{id}")
-	public ResponseEntity <Postagem> GetById(@PathVariable long id){
+	@GetMapping ("/{id}") //indica um método de get
+	public ResponseEntity <PostagemModel> GetById(@PathVariable long id){
 	return repository.findById(id)
 			.map(resp -> ResponseEntity.ok(resp))
 			.orElse(ResponseEntity.notFound().build());
@@ -44,17 +44,17 @@ public class PostagemController {
 	
 	@GetMapping ("/titulo/{titulo}")
 	
-	public ResponseEntity<List<Postagem>> GetByTitulo (@PathVariable String titulo){
+	public ResponseEntity<List<PostagemModel>> GetByTitulo (@PathVariable String titulo){
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Postagem> post (@RequestBody Postagem postagem){
+	public ResponseEntity<PostagemModel> post (@RequestBody PostagemModel postagem){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Postagem> put (@RequestBody Postagem postagem){
+	public ResponseEntity<PostagemModel> put (@RequestBody PostagemModel postagem){
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
 	
@@ -62,6 +62,13 @@ public class PostagemController {
 	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
+	
+	/*Uma expressão Lambda permite definir uma interface funcional 
+	 * (novamente, um método abstrato) que o compilador identifica pela estrutura. 
+	 * O compilador pode determinar a interface funcional representada a partir 
+	 * de sua posição. O tipo de uma expressão lambda é o da interface funcional 
+	 * associada.
+	 */
 	
 }
 

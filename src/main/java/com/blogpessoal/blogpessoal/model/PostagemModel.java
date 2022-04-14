@@ -5,16 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity  //Annotation que indica que é uma entidade no JPA hibernate
-@Table(name = "postagem")  // Annotation indica que dentro do BD essa tabela se chamará Postagem
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public class Postagem {
+@Entity  //Annotation que indica que é uma entidade no JPA hibernate
+@Table(name = "tb_postagem")  // Annotation indica que dentro do BD essa tabela se chamará Postagem
+
+public class PostagemModel {
 	
 	@Id //Annotation que indica que será a primary key na tabela postagem
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //evita a criação de números iguais
@@ -30,6 +33,11 @@ public class Postagem {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date = new java.sql.Date(System.currentTimeMillis());
+	
+	@ManyToOne //de vários pra um
+	@JsonIgnoreProperties("postagem") //essa annotation evita recursividade
+	private TemaModel tema;
+	
 	
 	public long getId() {
 		return id;
@@ -54,6 +62,13 @@ public class Postagem {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public TemaModel getTema() {
+		return tema;
+	}
+	public void setTema(TemaModel tema) {
+		this.tema = tema;
 	}
 	
 	
