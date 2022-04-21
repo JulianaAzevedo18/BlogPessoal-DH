@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PostagemModel {
 	
 	@Id //Annotation que indica que será a primary key na tabela postagem
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //evita a criação de números iguais
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //evita a criação de números iguais - auto incremento
 	private long id;
 	
 	@NotNull //Annotation define que o usuário é obrigado a inserir um conteúdo no título
