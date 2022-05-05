@@ -2,6 +2,8 @@ package com.blogpessoal.blogpessoal.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -59,8 +61,25 @@ public class UsuarioControllerTest {
 	@DisplayName("Não deve permitir duplicação de usuário")
 	public void naoDeveDuplicarUsuario() {
 		usuarioService.CadastrarUsuario(new Usuario(0L,"Andressa","andressa.azevedo@91@gmail.com","1234","foto2.jpg"));
-	HttpEntity <Usuario> requisicao = new HttpEntity<Usuario>(new Usuario(0L,"Andressa","andressa.azevedo@91@gmail.com","1234","foto2.jpg"));
+	HttpEntity <Usuario> requisicao = new HttpEntity<Usuario>(new Usuario(0L,"Andressa","andressa.azevedo91@gmail.com","1234","foto2.jpg"));
 	ResponseEntity <Usuario> resposta = testRestTemplate.exchange("/usuario/cadastrar", HttpMethod.POST, requisicao, Usuario.class);
 	assertEquals(HttpStatus.BAD_REQUEST, resposta.getStatusCode()); //testar o erro do usuario duplicado
 	}
+	
+	@Test
+	@Order(3)
+	@DisplayName("Alterar um usuário")
+	public void deveAlterarUmUsuario() {
+		
+		Optional <Usuario> usuarioCreate = usuarioService.CadastrarUsuario(0L,"Jose","jojovencio@gmail.com","1234","foto3.jpg");
+		Usuario usuarioUpdate = new Usuario(usuarioCreate.get().getId(), 
+				"Jose Azevedo","jojovencio@gmail.com","1234","foto3.jpg");
+		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(usuarioUpdate);
+		ResponseEntity<Usuario> resposta = testRestTemplate.withBasicAuth("root", "root").exchange("/usuarios/cadastrar",HttpMethod.PUT, requisicao, Usuario.class);
+		assertEquals(HttpStatus.OK, resposta.getStatusCode());
+		assertEquals(usuarioUpdate.getNome(), resposta.getBody().getNome());
+		assertEquals(usuarioUpdate.getUsuario(), resposta.getBody().getUsuario());
+		assertEquals(usuarioUpdate.getFoto(), resposta.getBody().getFoto());
+	}
+	
 }
