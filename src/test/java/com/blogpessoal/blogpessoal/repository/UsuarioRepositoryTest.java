@@ -30,10 +30,10 @@ public class UsuarioRepositoryTest {
 	@BeforeAll
 	void start(){
 		usuarioRepository.deleteAll();
-		usuarioRepository.save(new Usuario (0L,"Jose","jojovencio@gmail.com","123","foto1.jpg"));
-		usuarioRepository.save(new Usuario (0L,"Lourdes","lourdes.azevedo25-3@gmail.com","123","foto1.jpg"));
-		usuarioRepository.save(new Usuario (0L,"Henrique","henriquetk4@hotmail.com","123","foto1.jpg"));
-		usuarioRepository.save(new Usuario (0L,"Andressa","Irma","andressa.azevedo91@gmail.com","foto1.jpg"));
+		usuarioRepository.save(new Usuario (0L,"Jose","jojovencio@gmail.com","12377","foto1.jpg"));
+		usuarioRepository.save(new Usuario (0L,"Lourdes","lourdes.azevedo25-3@gmail.com","12355","foto1.jpg"));
+		usuarioRepository.save(new Usuario (0L,"Henrique","henriquetk4@hotmail.com","12366","foto1.jpg"));
+		usuarioRepository.save(new Usuario (0L,"Andressa","andressa.azevedo91@gmail.com","12366", "foto1.jpg"));
 	}
 	
 	@Test
