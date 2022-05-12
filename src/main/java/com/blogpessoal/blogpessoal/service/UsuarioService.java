@@ -42,4 +42,9 @@ public class UsuarioService {
 		return null;
 	}
 
+	public Optional<Usuario> CadastrarUsuario(long id, String nome, String usuario, String senha,String foto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
