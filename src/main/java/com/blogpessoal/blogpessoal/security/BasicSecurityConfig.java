@@ -21,6 +21,11 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		
 		auth.userDetailsService(userDetailsService);
+		
+		auth.inMemoryAuthentication()
+		.withUser("root")
+		.password(passwordEncoder().encode("root"))
+		.authorities("root");
 	}
 	
 	@Bean //serve para exportar uma classe para o Spring, para que ele consiga carregar essa classe e fazer injeção de dependência dela em outra classes.
