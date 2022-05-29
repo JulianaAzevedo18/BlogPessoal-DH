@@ -46,4 +46,8 @@ public class UsuarioService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+<<<<<<< HEAD
+
+=======
+>>>>>>> 496cd32f669a1777f522246240a62d2e11ffb90d
 }
