@@ -20,8 +20,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.blogpessoal.blogpessoal.model.Usuario;
-import com.blogpessoal.blogpessoal.repository.UsuarioRepository;
+import com.blogpessoal.blogpessoal.model.Cliente;
+import com.blogpessoal.blogpessoal.repository.ClienteRepository;
 import com.blogpessoal.blogpessoal.service.UsuarioService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -37,7 +37,7 @@ public class UsuarioControllerTest {
 	private UsuarioService usuarioService;
 	
 	@Autowired
-	private UsuarioRepository usuarioRepository; //vai fazer a limpeza do bd de teste
+	private ClienteRepository usuarioRepository; //vai fazer a limpeza do bd de teste
 	
 	@BeforeAll
 	void start(){
@@ -48,8 +48,8 @@ public class UsuarioControllerTest {
 	@Order(1)
 	@DisplayName("Cadastrar um usuário:")
 	public void deveCriarUsuario() {
-		HttpEntity <Usuario> requisicao = new HttpEntity <Usuario> (new Usuario(0L,"Henrique","henriquetk4@hotmail.com","123","foto1.jpg"));
-		ResponseEntity <Usuario> resposta = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, requisicao, Usuario.class);
+		HttpEntity <Cliente> requisicao = new HttpEntity <Cliente> (new Cliente(0L,"Henrique","henriquetk4@hotmail.com","123","foto1.jpg"));
+		ResponseEntity <Cliente> resposta = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, requisicao, Cliente.class);
 		assertEquals(HttpStatus.CREATED, resposta.getStatusCode()); //cheeca se a resposta é a resposta esperada
 		assertEquals(requisicao.getBody().getNome(), resposta.getBody().getNome());
 		assertEquals(requisicao.getBody().getUsuario(), resposta.getBody().getUsuario());
@@ -60,9 +60,9 @@ public class UsuarioControllerTest {
 	@Order(2)
 	@DisplayName("Não deve permitir duplicação de usuário")
 	public void naoDeveDuplicarUsuario() {
-		usuarioService.CadastrarUsuario(new Usuario(0L,"Andressa","andressa.azevedo@91@gmail.com","1234","foto2.jpg"));
-	HttpEntity <Usuario> requisicao = new HttpEntity<Usuario>(new Usuario(0L,"Andressinha","andressa.azevedo91@gmail.com","12345","foto2.jpg"));
-	ResponseEntity <Usuario> resposta = testRestTemplate.exchange("/usuario/cadastrar", HttpMethod.POST, requisicao, Usuario.class);
+		usuarioService.CadastrarUsuario(new Cliente(0L,"Andressa","andressa.azevedo@91@gmail.com","1234","foto2.jpg"));
+	HttpEntity <Cliente> requisicao = new HttpEntity<Cliente>(new Cliente(0L,"Andressinha","andressa.azevedo91@gmail.com","12345","foto2.jpg"));
+	ResponseEntity <Cliente> resposta = testRestTemplate.exchange("/usuario/cadastrar", HttpMethod.POST, requisicao, Cliente.class);
 	assertEquals(HttpStatus.BAD_REQUEST, resposta.getStatusCode()); //testar o erro do usuario duplicado
 	}
 	
@@ -71,11 +71,11 @@ public class UsuarioControllerTest {
 	@DisplayName("Alterar um usuário")
 	public void deveAlterarUmUsuario() {
 		
-		Optional <Usuario> usuarioCreate = usuarioService.CadastrarUsuario(0L,"Jose","jojovencio@gmail.com","1234","foto3.jpg");
-		Usuario usuarioUpdate = new Usuario(usuarioCreate.get().getId(), 
+		Optional <Cliente> usuarioCreate = usuarioService.CadastrarUsuario(0L,"Jose","jojovencio@gmail.com","1234","foto3.jpg");
+		Cliente usuarioUpdate = new Cliente(usuarioCreate.get().getId(), 
 				"Jose Azevedo","jojojojovencio@gmail.com","1234","foto3.jpg");
-		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(usuarioUpdate);
-		ResponseEntity<Usuario> resposta = testRestTemplate.withBasicAuth("root", "root").exchange("/usuarios/cadastrar",HttpMethod.PUT, requisicao, Usuario.class);
+		HttpEntity<Cliente> requisicao = new HttpEntity<Cliente>(usuarioUpdate);
+		ResponseEntity<Cliente> resposta = testRestTemplate.withBasicAuth("root", "root").exchange("/usuarios/cadastrar",HttpMethod.PUT, requisicao, Cliente.class);
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 		assertEquals(usuarioUpdate.getNome(), resposta.getBody().getNome());
 		assertEquals(usuarioUpdate.getUsuario(), resposta.getBody().getUsuario());

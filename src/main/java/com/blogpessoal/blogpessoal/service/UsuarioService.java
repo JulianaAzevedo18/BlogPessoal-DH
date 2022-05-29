@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.blogpessoal.blogpessoal.model.Usuario;
+import com.blogpessoal.blogpessoal.model.Cliente;
 import com.blogpessoal.blogpessoal.model.UsuarioLogin;
-import com.blogpessoal.blogpessoal.repository.UsuarioRepository;
+import com.blogpessoal.blogpessoal.repository.ClienteRepository;
 
 @Service
 public class UsuarioService {
@@ -42,7 +42,7 @@ public class UsuarioService {
 		return null;
 	}
 
-	public Optional<Usuario> CadastrarUsuario(long id, String nome, String usuario, String senha,String foto) {
+	public Optional<Cliente> CadastrarUsuario(long id, String nome, String usuario, String senha,String foto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
